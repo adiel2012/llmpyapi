@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/app/src
+      - ./models:/app/models
+    environment:
+      - FLASK_APP=src/app.py
+      - FLASK_ENV=development
+      - MODEL_PATH=/app/models/deepseek-llm-7b-chat.Q4_K_M.gguf
+    deploy:
+      resources:
+        limits:
+          memory: 12G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
