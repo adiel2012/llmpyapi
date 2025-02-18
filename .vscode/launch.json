@@ -1,0 +1,81 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Flask: Debug API",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/app.py",
+            "python": "${workspaceFolder}/venv/Scripts/python.exe",
+            "env": {
+                "FLASK_APP": "src/app.py",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG": "1",
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "args": [],
+            "jinja": true,
+            "justMyCode": false,
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            // Configuration for debugging with specific environment variables
+            "name": "Flask: Custom Environment",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/app.py",
+            "env": {
+                "FLASK_APP": "src/app.py",
+                "FLASK_ENV": "development",
+                "FLASK_DEBUG": "1",
+                "PYTHONPATH": "${workspaceFolder}",
+                "MODEL_PATH": "${workspaceFolder}/models/deepseek-coder-1.3b-base.Q4_K_M.gguf",
+                "MAX_TOKENS": "2048",
+                "DEFAULT_TEMPERATURE": "0.7"
+            },
+            "args": [],
+            "jinja": true,
+            "justMyCode": false,
+            "console": "integratedTerminal"
+        },
+        {
+            // Configuration for remote debugging
+            "name": "Flask: Remote Debug",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "."
+                }
+            ],
+            "justMyCode": false
+        },
+        {
+            // Configuration for debugging tests
+            "name": "Python: Debug Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "TESTING": "True"
+            },
+            "justMyCode": false
+        }
+    ],
+    "compounds": [
+        {
+            // Compound configuration for debugging both server and tests
+            "name": "Server + Tests",
+            "configurations": ["Flask: Debug API", "Python: Debug Tests"]
+        }
+    ]
+}
